@@ -1,11 +1,26 @@
-export function decodedResistorValue(i: string[]) {
-	const num: number = COLORS.indexOf(i[0]) + COLORS.indexOf(i[1]);
-	var fullNum: number = parseInt(num + "0".repeat(COLORS.indexOf(i[2])));
+function decodedResistorValue(i: string[]) {
+	const num: string = COLORS.indexOf(i[0]).toString() + COLORS.indexOf(i[1]).toString()
+	var fullNum: number = parseInt(`${num}${"0".repeat(COLORS.indexOf(i[2]))}`)
 
-    return fullNum;
+	const metric = [
+		{ divider: 1e9 , suffix: ' giga' },
+		{ divider: 1e6 , suffix: ' mega' },
+		{ divider: 1e3 , suffix: ' kilo' },
+	]
+
+	var ohms: string = fullNum + " ohms"
+
+	for (var j = 0; j < metric.length; j++) {
+		if (fullNum >= metric[j].divider) {
+			ohms = (fullNum / metric[j].divider).toString() + metric[j].suffix + "ohms"
+			break
+		}
+	}
+
+	return ohms
 }
 
-export const COLORS = [
+const COLORS = [
 	"black",
 	"brown",
 	"red",
@@ -16,4 +31,6 @@ export const COLORS = [
 	"violet",
 	"grey",
 	"white",
-];
+]
+
+console.debug(decodedResistorValue(["brown", "orange", "red"]))
