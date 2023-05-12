@@ -16,4 +16,4 @@ export function hey(message: string): string {
       return "Whoa, chill out!"
     }
     return "Whatever."
-  }
+}
